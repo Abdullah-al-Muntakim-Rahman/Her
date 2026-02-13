@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Valentine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & BASICS --- */
+        :root {
+            --primary: #d44d5c; /* Deep romantic red */
+            --secondary: #ffb7b2; /* Soft pink */
+            --bg: #fff0f3; /* Very pale pink background */
+            --text: #4a4a4a;
+            --gold: #c5a059;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Lato', sans-serif;
+            overflow-x: hidden;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+
+        body.loaded {
+            opacity: 1;
+        }
+
+        /* --- BACKGROUND ANIMATION --- */
+        .bg-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .heart-particle {
+            position: absolute;
+            color: rgba(212, 77, 92, 0.2);
+            animation: float 6s infinite ease-in-out;
+            font-size: 1.5rem;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .script-font {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* --- HERO SECTION --- */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            animation: fadeInDown 2s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #888;
+            letter-spacing: 2px;
+            animation: fadeInUp 2s ease 0.5s backwards;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        /* --- SECTIONS --- */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* --- GALLERY (POLAROID STYLE) --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 1rem;
+            padding-bottom: 3rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease, z-index 0.3s;
+            position: relative;
+        }
+
+        .polaroid:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .polaroid:hover {
+            transform: scale(1.05) rotate(0);
+            z-index: 10;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            filter: sepia(20%);
+            border-radius: 2px;
+        }
+
+        .polaroid p {
+            position: absolute;
+            bottom: 1rem;
+            width: 100%;
+            text-align: center;
+            left: 0;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+            color: #555;
+        }
+
+        /* --- LETTER SECTION --- */
+        .letter-container {
+            background: #fff;
+            padding: 4rem;
+            border: 1px solid #e0e0e0;
+            box-shadow: 0 0 50px rgba(0,0,0,0.05);
+            position: relative;
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+
+        .letter-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .letter-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            white-space: pre-wrap; /* Preserves typing format */
+        }
+
+        /* --- INTERACTIVE BUTTON --- */
+        .love-btn-container {
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .love-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(212, 77, 92, 0.4);
+            font-family: 'Playfair Display', serif;
+        }
+
+        .love-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(212, 77, 92, 0.6);
+            background: #c03947;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
+        }
+
+        /* Hide elements for scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-hearts" id="bg-hearts"></div>
+
+    <header>
+        <h1 class="hero-title script-font">Happy Valentine's Day</h1>
+        <h2 class="hero-subtitle">To the most beautiful girl in the world</h2>
+        <div class="scroll-indicator">
+            <span>&#8595;</span>
+        </div>
+    </header>
+
+    <section id="memories">
+        <h2 class="reveal" style="text-align: center; margin-bottom: 2rem; color: var(--primary);">Our Beautiful Moments</h2>
+        <div class="gallery-grid">
+            <div class="polaroid reveal">
+                <img src="photo1.jpg" alt="Beautiful Memory 1" onerror="this.src='https://placehold.co/600x800/ffb7b2/white?text=Your+Photo+Here'">
+                <p>Where it started</p>
+            </div>
+            <div class="polaroid reveal" style="transition-delay: 0.1s;">
+                <img src="photo2.jpg" alt="Beautiful Memory 2" onerror="this.src='https://placehold.co/600x800/d44d5c/white?text=Your+Photo+Here'">
+                <p>Home</p>
+            </div>
+            <div class="polaroid reveal" style="transition-delay: 0.1s;">
+              <img src="photo5.jpg" alt="Beautiful Memory 2" onerror="this.src='https://placehold.co/600x800/d44d5c/white?text=Your+Photo+Here'">
+              <p>Slaying together</p>
+            </div>
+            <div class="polaroid reveal" style="transition-delay: 0.1s;">
+              <img src="photo6.jpg" alt="Beautiful Memory 2" onerror="this.src='https://placehold.co/600x800/d44d5c/white?text=Your+Photo+Here'">
+              <p>Dream couple frfr</p>
+            </div>
+            <div class="polaroid reveal" style="transition-delay: 0.2s;">
+                <img src="photo3.jpg" alt="Beautiful Memory 3" onerror="this.src='https://placehold.co/600x800/ffb7b2/white?text=Your+Photo+Here'">
+                <p>"Happy wife happy life"</p>
+            </div>
+            <div class="polaroid reveal" style="transition-delay: 0.3s;">
+                <img src="photo4.jpg" alt="Beautiful Memory 4" onerror="this.src='https://placehold.co/600x800/d44d5c/white?text=Your+Photo+Here'">
+                <p>My Forever</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="letter-container reveal">
+            <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--gold);">My Letter To You</h3>
+            <div class="letter-text" id="typewriter-text"></div>
+        </div>
+    </section>
+
+    <section class="love-btn-container reveal">
+        <button class="love-btn" onclick="celebrate()">Click for a Surprise</button>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        // --- 1. Background Hearts Generator ---
+        function createHearts() {
+            const container = document.getElementById('bg-hearts');
+            const heartCount = 20;
+            
+            for(let i=0; i<heartCount; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart-particle');
+                heart.innerHTML = '❤';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                heart.style.opacity = Math.random() * 0.5;
+                container.appendChild(heart);
+            }
+        }
+
+        // --- 2. Typewriter Effect for the Letter ---
+        // EDIT THIS TEXT for your girlfriend
+        const message = `Nishat,
+
+Valentines didn't have much meaning until you came into my life. Your existence taught me that valentines isn’t just about expressing love, its about celebrating the fortune that is, to find your soulmate among billions and across time.
+
+Every moment spent with you is a memory I cherish. You bring so much light, laughter, and love into my life. Thank you for being my partner, my best friend, and my Valentine.
+
+Sending lots of love with hope for many more valentines to be spent with you.
+
+Love,
+Unmesh`;
+
+        const typeWriterElement = document.getElementById('typewriter-text');
+        let i = 0;
+        let hasTyped = false;
+
+        function typeWriter() {
+            if (i < message.length) {
+                typeWriterElement.innerHTML += message.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50); // Speed of typing
+            }
+        }
+
+        // --- 3. Scroll Observer (Animations) ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    
+                    // Trigger typewriter only when letter section is visible
+                    if(entry.target.querySelector('#typewriter-text') && !hasTyped) {
+                        hasTyped = true;
+                        typeWriter();
+                    }
+                }
+            });
+        });
+
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        // --- 4. Surprise Button (Confetti) ---
+        function celebrate() {
+            // Heart shaped confetti
+            var defaults = {
+                spread: 360,
+                ticks: 100,
+                gravity: 0,
+                decay: 0.94,
+                startVelocity: 30,
+                shapes: ['heart'],
+                colors: ['#FFC0CB', '#FF69B4', '#FF1493', '#C71585']
+            };
+
+            confetti({
+                ...defaults,
+                particleCount: 50,
+                scalar: 2
+            });
+
+            confetti({
+                ...defaults,
+                particleCount: 25,
+                scalar: 3
+            });
+
+            confetti({
+                ...defaults,
+                particleCount: 10,
+                scalar: 4
+            });
+            
+            // Change button text
+            document.querySelector('.love-btn').innerText = "I Love You! ❤";
+        }
+
+        // Initialize
+        window.onload = () => {
+            document.body.classList.add('loaded');
+            createHearts();
+        }
+    </script>
+</body>
+</html>
